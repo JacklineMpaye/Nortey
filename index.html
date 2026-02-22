@@ -12,7 +12,7 @@ body {
   justify-content: center;
   align-items: center;
   background: radial-gradient(circle at center, #fff8f0, #f2e6ff, #e6f0ff);
-  animation: glow 8s infinite alternate;
+  animation: glow 6s infinite alternate;
   font-family: 'Georgia', serif;
   overflow: hidden;
 }
@@ -41,6 +41,13 @@ body {
   transition: transform 1s;
   backface-visibility: hidden;
 }
+
+/* Stack pages properly */
+.page:nth-child(1) { z-index: 5; }
+.page:nth-child(2) { z-index: 4; }
+.page:nth-child(3) { z-index: 3; }
+.page:nth-child(4) { z-index: 2; }
+.page:nth-child(5) { z-index: 1; }
 
 .page h1, .page h2 {
   color: #7a4e2d;
@@ -79,9 +86,8 @@ button {
 
 <div class="book">
 
-  <!-- Page 1 -->
   <div class="page">
-    <h1>Happy 25th Birthday My Knight❤️</h1>
+    <h1>Happy 25th Birthday ❤️</h1>
     <p>
       A man after God's heart.<br>
       A year of divine alignment begins today.
@@ -89,7 +95,6 @@ button {
     <button onclick="flipPage(this)">Next</button>
   </div>
 
-  <!-- Page 2 -->
   <div class="page">
     <h2>Encounters</h2>
     <p>
@@ -100,30 +105,27 @@ button {
     <button onclick="flipPage(this)">Next</button>
   </div>
 
-  <!-- Page 3 -->
   <div class="page">
     <h2>Our Love</h2>
     <p>
-      This love is ordained by God,<br>
+      If this love is ordained by God,<br>
       may distance never weaken it.<br>
       May provision come for our meeting.<br>
-      May peace confirm Your will.
+      May peace confirm God's will.
     </p>
     <button onclick="flipPage(this)">Next</button>
   </div>
 
-  <!-- Page 4 -->
   <div class="page">
     <h2>Provision & Purpose</h2>
     <p>
-      May God lead you to the field of your prosperity.<br>
+      May God lead you to the field of prosperity.<br>
       May focus replace distraction.<br>
       May wealth locate you through obedience.
     </p>
     <button onclick="flipPage(this)">Next</button>
   </div>
 
-  <!-- Page 5 -->
   <div class="page">
     <h2>25 — The Shift</h2>
     <p>
@@ -140,6 +142,7 @@ button {
 function flipPage(button) {
   const page = button.parentElement;
   page.classList.add("flipped");
+  button.style.display = "none";
 }
 </script>
 
