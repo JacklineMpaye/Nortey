@@ -42,13 +42,6 @@ body {
   backface-visibility: hidden;
 }
 
-/* Stack pages properly */
-.page:nth-child(1) { z-index: 5; }
-.page:nth-child(2) { z-index: 4; }
-.page:nth-child(3) { z-index: 3; }
-.page:nth-child(4) { z-index: 2; }
-.page:nth-child(5) { z-index: 1; }
-
 .page h1, .page h2 {
   color: #7a4e2d;
   text-align: center;
@@ -60,10 +53,16 @@ body {
   text-align: center;
 }
 
-button {
+.controls {
   position: absolute;
   bottom: 20px;
-  right: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+button {
   padding: 8px 15px;
   background: #7a4e2d;
   color: white;
@@ -72,29 +71,38 @@ button {
   cursor: pointer;
 }
 
-.page.flipped {
-  transform: rotateY(-180deg);
+.music-btn {
+  position: absolute;
+  top: -50px;
+  left: 0;
 }
 </style>
 </head>
 
 <body>
 
-<audio autoplay loop>
+<div class="book">
+
+<button class="music-btn" onclick="toggleMusic()">Play Music 🎵</button>
+
+<audio id="bgMusic" loop>
   <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4a3d2e93f1.mp3?filename=soft-piano-110624.mp3" type="audio/mpeg">
 </audio>
 
-<div class="book">
-
+  <!-- Page 1 -->
   <div class="page">
     <h1>Happy 25th Birthday ❤️</h1>
     <p>
       A man after God's heart.<br>
       A year of divine alignment begins today.
     </p>
-    <button onclick="flipPage(this)">Next</button>
+    <div class="controls">
+      <span></span>
+      <button onclick="nextPage()">Next →</button>
+    </div>
   </div>
 
+  <!-- Page 2 -->
   <div class="page">
     <h2>Encounters</h2>
     <p>
@@ -102,20 +110,28 @@ button {
       May the Holy Spirit speak clearly.<br>
       May uncertainty be replaced with direction.
     </p>
-    <button onclick="flipPage(this)">Next</button>
+    <div class="controls">
+      <button onclick="prevPage()">← Back</button>
+      <button onclick="nextPage()">Next →</button>
+    </div>
   </div>
 
+  <!-- Page 3 -->
   <div class="page">
     <h2>Our Love</h2>
     <p>
       If this love is ordained by God,<br>
       may distance never weaken it.<br>
       May provision come for our meeting.<br>
-      May peace confirm God's will.
+      May peace confirm His will.
     </p>
-    <button onclick="flipPage(this)">Next</button>
+    <div class="controls">
+      <button onclick="prevPage()">← Back</button>
+      <button onclick="nextPage()">Next →</button>
+    </div>
   </div>
 
+  <!-- Page 4 -->
   <div class="page">
     <h2>Provision & Purpose</h2>
     <p>
@@ -123,9 +139,13 @@ button {
       May focus replace distraction.<br>
       May wealth locate you through obedience.
     </p>
-    <button onclick="flipPage(this)">Next</button>
+    <div class="controls">
+      <button onclick="prevPage()">← Back</button>
+      <button onclick="nextPage()">Next →</button>
+    </div>
   </div>
 
+  <!-- Page 5 -->
   <div class="page">
     <h2>25 — The Shift</h2>
     <p>
@@ -134,16 +154,53 @@ button {
       Your year of divine favor.<br><br>
       I honor the man you are becoming.
     </p>
+    <div class="controls">
+      <button onclick="prevPage()">← Back</button>
+      <span></span>
+    </div>
   </div>
 
 </div>
 
 <script>
-function flipPage(button) {
-  const page = button.parentElement;
-  page.classList.add("flipped");
-  button.style.display = "none";
+const pages = document.querySelectorAll(".page");
+let currentPage = 0;
+
+function updatePages() {
+  pages.forEach((page, index) => {
+    page.style.zIndex = pages.length - index;
+    if (index < currentPage) {
+      page.style.transform = "rotateY(-180deg)";
+    } else {
+      page.style.transform = "rotateY(0deg)";
+    }
+  });
 }
+
+function nextPage() {
+  if (currentPage < pages.length) {
+    currentPage++;
+    updatePages();
+  }
+}
+
+function prevPage() {
+  if (currentPage > 0) {
+    currentPage--;
+    updatePages();
+  }
+}
+
+function toggleMusic() {
+  const music = document.getElementById("bgMusic");
+  if (music.paused) {
+    music.play();
+  } else {
+    music.pause();
+  }
+}
+
+updatePages();
 </script>
 
 </body>
